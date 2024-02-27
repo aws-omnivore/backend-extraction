@@ -62,7 +62,7 @@ jobs:
 
     - name: Commit and Push
       run: |
-        cd deployment/recommendation
+        cd deployment/extract
         git config user.email ${{ env.GIT_EMAIL }}
         git config user.name ${{ env.GIT_NAME }}
         git add deployment.yml
