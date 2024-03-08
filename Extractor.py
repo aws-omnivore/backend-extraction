@@ -112,7 +112,7 @@ def extractor():
         img = transform(img).unsqueeze(0)
         outputs = model(img)
         _, predicted = torch.max(outputs, 1)
-        
+        return jsonify(predicted.item()), 500
         
         translate_response = requests.post(target_url, json={'name': predicted.item()})
         print(translate_response)
