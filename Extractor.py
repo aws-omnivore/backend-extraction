@@ -29,7 +29,7 @@ s3_client = boto3.client('s3')
 
 MODEL_BUCKET_NAME = "extract-signboard-models"
 IMAGE_BUCKET_NAME='restaurants-image'
-target_url = "http://translate-service.fs-service.svc.cluster.local/api/v1/record"
+target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/record"
 
 
 
