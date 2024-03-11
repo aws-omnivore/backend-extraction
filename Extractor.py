@@ -116,7 +116,9 @@ def extractor():
         target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate"
         # "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate/"
         store_name = store_names[predicted.item()]
-        target_url = target_url+"?name‎="+store_names[predicted.item()]
+        # target_url = target_url+"?name="+store
+        target_url = target_url + "?name=" + store_name
+        # target_url = target_url+"?name‎="+store_names[predicted.item()]
         
         # target_url += store_name  # 경로 수정
         
