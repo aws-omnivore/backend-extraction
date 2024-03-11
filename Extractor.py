@@ -29,7 +29,7 @@ s3_client = boto3.client('s3')
 
 MODEL_BUCKET_NAME = "extract-signboard-models"
 IMAGE_BUCKET_NAME='restaurants-image'
-target_url = "translate-service.fs-service.svc.cluster.local/api/v1/record"
+
 
 
 
@@ -112,7 +112,7 @@ def extractor():
         img = transform(img).unsqueeze(0)
         outputs = model(img)
         _, predicted = torch.max(outputs, 1)
-        
+        target_url = "translate-service.fs-service.svc.cluster.local/api/v1/record"
         target_url = target_url+"?name="+predicted.item()
         # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
         translate_response = requests.get(target_url, headers={'Language': language})
