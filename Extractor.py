@@ -1,10 +1,9 @@
 import boto3
- 
+
 import os
 import io
 import time
 import base64
-import logging
 from PIL import Image
 
 import torch
@@ -30,7 +29,7 @@ s3_client = boto3.client('s3')
 
 MODEL_BUCKET_NAME = "extract-signboard-models"
 IMAGE_BUCKET_NAME='restaurants-image'
-target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate"
+target_url = "translate-service.fs-service.svc.cluster.local/api/v1/record"
 
 
 
@@ -44,7 +43,7 @@ transform = transforms.Compose([
 ])
 
 
-store_names = ["투썸플레이스 가산디지털점", "유키온나", "미트앤쓰리", "스시히또"]
+store_names = ["엉생", "명동칼국수", "오리", "참치"]
 if args['test']:
     
     print("Test Environment")
@@ -103,15 +102,6 @@ def extractor():
         la, lo = request.headers.get('La') , request.headers.get('Lo')
         language=request.headers.get('Language')
         print("la, lo, language", la, lo, language)
-
-        # 이미지 파일이 요청에 포함되어 있는지 확인
-        if 'image' not in request.files:
-            return "이미지 파일이 요청에 포함되지 않았습니다.", 400
-
-        image_file = request.files['image']
-        if image_file.filename == '':
-            return "이미지 파일이 선택되지 않았습니다.", 400
-     
         image_file = request.files['image']
         image_bytes = io.BytesIO(image_file.read())
         img = Image.open(image_bytes)
@@ -123,20 +113,17 @@ def extractor():
         outputs = model(img)
         _, predicted = torch.max(outputs, 1)
         
-        
-        translate_response = requests.post(target_url, json={'name': store_names[predicted.item()]})
-        print(translate_response)
-        # app.logger.info(f'translate_response : [{translate_response}]')
-        
+        target_url = target_url+"?name="+predicted.item()
+        # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
+        translate_response = requests.get(target_url, headers={'Language': language})
+
         if translate_response.status_code == 200:
             translate_data = translate_response.json()
-            print("Result sent successfully")
             return jsonify(translate_data)
-            
+            print("Result sent successfully")
         else:
-            print("Failed to send result")
             return jsonify({'error': 'Translate service error'}), 500
-            
+            print("Failed to send result")
         
     except Exception as e:
         print(e)
