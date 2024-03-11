@@ -43,7 +43,7 @@ transform = transforms.Compose([
 ])
 
 
-store_names = ["엉생", "명동칼국수", "오리", "참치"]
+
 if args['test']:
     
     print("Test Environment")
@@ -114,6 +114,7 @@ def extractor():
         _, predicted = torch.max(outputs, 1)
         target_url = "translate-service.fs-service.svc.cluster.local/api/v1/record"
         target_url = target_url+"?name="+predicted.item()
+        store_names = ["찐퍼", "찐퍼", "찐퍼", "찐퍼"]
         # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
         translate_response = requests.get(target_url, headers={'Language': language})
 
