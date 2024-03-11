@@ -112,12 +112,13 @@ def extractor():
         img = transform(img).unsqueeze(0)
         outputs = model(img)
         _, predicted = torch.max(outputs, 1)
-        target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/record"
+        target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate"
         store_names = ["찐퍼", "찐퍼", "찐퍼", "찐퍼"]
         target_url = target_url+"?name="+store_names[predicted.item()]
         
         # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
         translate_response = requests.get(target_url, headers={'Language': language})
+        
         return jsonify({'log': f'target_url, {target_url}, {translate_response}'}), 500
         if translate_response.status_code == 200:
             translate_data = translate_response.json()
