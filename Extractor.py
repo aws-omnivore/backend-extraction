@@ -118,13 +118,13 @@ def extractor():
         
         # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
         translate_response = requests.get(target_url, headers={'Language': language})
-
+        return jsonify({'log': f'target_url, {target_url}, {target_url}'}), 500
         if translate_response.status_code == 200:
             translate_data = translate_response.json()
             return jsonify(translate_data)
             print("Result sent successfully")
         else:
-            return jsonify({'error': 'Translate service error'}), 500
+            return jsonify({'error': f'Translate service error, {translate_response}'}), 500
             print("Failed to send result")
         
     except Exception as e:
