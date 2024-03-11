@@ -115,9 +115,10 @@ def extractor():
         store_names = ["찐퍼", "찐퍼", "찐퍼", "찐퍼"]
         target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate/"
         # "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate/"
-        # target_url = target_url+"?name="+store_names[predicted.item()]
         store_name = store_names[predicted.item()]
-        target_url += store_name  # 경로 수정
+        target_url = target_url+"?restaurant_name‎="+store_names[predicted.item()]
+        
+        # target_url += store_name  # 경로 수정
         
         
         
