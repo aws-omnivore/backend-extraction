@@ -33,7 +33,7 @@ IMAGE_BUCKET_NAME='restaurants-image'
 
 
 
-
+store_names = ["찐퍼", "찐퍼", "찐퍼", "찐퍼"]
 def calc_landmark(La, Lo):
     pass
 
