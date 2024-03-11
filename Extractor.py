@@ -101,6 +101,7 @@ def extractor():
     try:
         la, lo = request.headers.get('La') , request.headers.get('Lo')
         language=request.headers.get('Language')
+        token = request.headers.get('Authorization')
         print("la, lo, language", la, lo, language)
         image_file = request.files['image']
         image_bytes = io.BytesIO(image_file.read())
@@ -125,7 +126,7 @@ def extractor():
         # target_url += store_name  # 경로 수정
         
         # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
-        translate_response = requests.get(target_url, headers={'Language': language})
+        translate_response = requests.get(target_url, headers={'Language': language, 'Authorization' : token })
         
         return jsonify({'log': f'target_url, {target_url}, {translate_response}'}), 500
         if translate_response.status_code == 200:
