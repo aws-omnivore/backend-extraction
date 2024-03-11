@@ -4,6 +4,7 @@ import os
 import io
 import time
 import base64
+import logging
 from PIL import Image
 
 import torch
@@ -116,6 +117,7 @@ def extractor():
         
         translate_response = requests.post(target_url, json={'name': predicted.item()})
         print(translate_response)
+        app.logger.info(f'translate_response : [{translate_response}]')
         return jsonify(translate_response), 500
         if translate_response.status_code == 200:
             translate_data = translate_response.json()
