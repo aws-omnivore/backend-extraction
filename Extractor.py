@@ -113,7 +113,7 @@ def extractor():
         outputs = model(img)
         _, predicted = torch.max(outputs, 1)
         store_names = ["찐퍼", "찐퍼", "찐퍼", "찐퍼"]
-        target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate/"
+        target_url = "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate"
         # "http://translate-service.fs-translate.svc.cluster.local/api/v1/translate/"
         store_name = store_names[predicted.item()]
         target_url = target_url+"?restaurant_name‎="+store_names[predicted.item()]
