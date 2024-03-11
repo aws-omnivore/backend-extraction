@@ -103,6 +103,15 @@ def extractor():
         la, lo = request.headers.get('La') , request.headers.get('Lo')
         language=request.headers.get('Language')
         print("la, lo, language", la, lo, language)
+
+        # 이미지 파일이 요청에 포함되어 있는지 확인
+        if 'image' not in request.files:
+            return "이미지 파일이 요청에 포함되지 않았습니다.", 400
+
+        image_file = request.files['image']
+        if image_file.filename == '':
+            return "이미지 파일이 선택되지 않았습니다.", 400
+     
         image_file = request.files['image']
         image_bytes = io.BytesIO(image_file.read())
         img = Image.open(image_bytes)
