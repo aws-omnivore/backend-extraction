@@ -118,7 +118,7 @@ def extractor():
         
         # translate_response = requests.post(target_url, json={'name': predicted.item(), 'Language' : language})
         translate_response = requests.get(target_url, headers={'Language': language})
-        return jsonify({'log': f'target_url, {target_url}, {target_url}'}), 500
+        return jsonify({'log': f'target_url, {target_url}, {translate_response}'}), 500
         if translate_response.status_code == 200:
             translate_data = translate_response.json()
             return jsonify(translate_data)
